@@ -6,6 +6,8 @@ import { keccak_256 } from "@noble/hashes/sha3";
 bitcoin.initEccLib(ecc);
 const bip32 = BIP32Factory(ecc);
 
+export const TAPROOT_MESSAGE = `Sign this message to generate your Bitcoin Taproot key. This key will be used for your generative.xyz transactions.`;
+
 export function generateTaprootAddressFromSignature(signature) {
   // returns Uint8Array
   const seed = getBytes(keccak_256(getBytes(signature, false)), false);
