@@ -62,6 +62,24 @@ TODO
 
 _(check the source code in `api/index.ts`)_
 
+For development
+
+```
+yarn dev
+
+# or from the `api` folder
+# deno run -A --watch index.ts
+```
+
+For production
+
+```
+yarn deploy
+
+# or from the `api` folder
+# deployctl deploy --project=bitcoin-connect index.ts
+```
+
 ### UI usage
 
 TODO: More docs on the site, explaining everything and the API
