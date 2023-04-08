@@ -127,3 +127,5 @@ yarn deploy
 ### UI usage
 
 TODO: More docs on the site, explaining everything and the API
+
+As an example, you can check the `api/index.html` to see how Metamask/web3 wallet signing is implemented in 30 lines of code. No need for libraries, no need for MEGABYTES of stuff _on the client side_. Ethereum Web3 is so awful it's mind-blowing.
