@@ -71,6 +71,8 @@ It accepts both POST and GET requests to the root domain, e.g. `/`.
 
 Try this https://bitcoin-connect.deno.dev/?signature=0x849cdb2c6ab66269d95e219ab99d12762c6caad49f6b0fa569289935c21179242747640b69be801f8660b17cba85bb37e8897be01830c6442b95fd6bc69038991b
 
+That's my actual Bitcoin taproot wallet (that can be used on https://generative.xyz), generated from my Ethereum address (0xA20c...5002 / wgw.eth). You can verify that at https://etherscan.io/verifySig/16514
+
 You can also pass the `signature` to a POST request body
 
 ```js
@@ -84,6 +86,18 @@ const res = await fetch("https://bitcoin-connect.deno.dev", {
   body: JSON.stringify({ signature: sig }),
 });
 
+const { error, data } = await res.json();
+const { address, signature, message } = data;
+
+constole.log({ error, address, signature, message });
+```
+
+or a `GET` request example
+
+```js
+const sig = `0x849cdb2c6ab66269d95e219ab99d12762c6caad49f6b0fa569289935c21179242747640b69be801f8660b17cba85bb37e8897be01830c6442b95fd6bc69038991b`;
+
+const res = await fetch("https://bitcoin-connect.deno.dev/?signature" + sig);
 const { error, data } = await res.json();
 const { address, signature, message } = data;
 
