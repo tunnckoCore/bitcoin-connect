@@ -38,37 +38,3 @@ serve(async (req) => {
 
   return Response.json({ data }, { status: 200 });
 });
-
-// on the client, the following 15 lines, and call it.
-// async function signMessage() {
-//   const [signer] = await window.ethereum.request({
-//     method: "eth_requestAccounts",
-//   });
-
-//   const message = `0x${bytesToHex(getBytes(MESSAGE_TO_SIGN))}`;
-//   const signature = await window.ethereum.request({
-//     method: "personal_sign",
-//     params: [message, signer],
-//   });
-
-//   return {
-//     message,
-//     signature,
-//     signer,
-//   };
-// }
-
-// // on the client on some button click
-// signMessage().then(async ({ signature }) => {
-//   const res = await fetch(`https://bitcoin.deno.dev?signature=${signature}`);
-//   const { data, error } = await res.json();
-//   if (!error) {
-//     console.error(`Error: ${error}`);
-//     return;
-//   }
-
-//   console.log("Congrats! You created a Bitcoin taproot wallet...");
-//   console.log("from your Ethereum wallet & seed phrase.");
-//   console.log("Wallet address:", data.address);
-//   console.log("Signature:", signature);
-// });
