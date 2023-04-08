@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate Bitcoin Taproot address</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
+    />
+  </head>
+  <body style="overflow: hidden">
+    <main class="container" style="padding-top: 0.75rem">
+      <hgroup>
+        <h1 style="margin: 0; margin-bottom: 0.75rem">
+          Generate Bitcoin wallet
+        </h1>
+        <h2>
+          Easily & securely create a Bitcoin wallet from your Ethereum wallet.
+          <a href="https://github.com/tunnckoCore/bitcoin-connect">GitHub</a> -
+          <a href="https://twitter.com/wgw_eth/status/1644576875845496833"
+            >Learn more</a
+          >
+        </h2>
+      </hgroup>
+      <form style="margin-top: 0">
+        <label for="taproot_message">
+          <strong>Sign message</strong>
+          <input
+            type="text"
+            name="taproot_message_to_sign"
+            id="taproot_message"
+          />
+        </label>
+        <label
+          for="taproot_address"
+          class="taproot_address"
+          style="display: none"
+        >
+          <strong>Bitcoin taproot address</strong>
+          <input type="text" name="taproot_address" id="taproot_address" />
+        </label>
+        <label for="signature" class="signature" style="display: none">
+          <strong>Signature</strong>
+          <input type="text" name="signature" id="signature" />
+        </label>
+        <button type="submit" id="sign_button">sign message</button>
+      </form>
+    </main>
+
+    <script type="module">
+      const DEFAULT_TAPROOT_MESSAGE = `Sign this message to generate your Bitcoin Taproot key. This key will be used for your generative.xyz transactions.`;
+
+      const input = document.querySelector("#taproot_message");
+      const button = document.querySelector("#sign_button");
+
+      input.value = DEFAULT_TAPROOT_MESSAGE;
+
+      button.onclick = async (e) => {
+        e.preventDefault();
+        const _input = document.querySelector("#taproot_message");
+        const _address = document.querySelector("#taproot_address");
+        const _label = document.querySelector(".taproot_address");
+        const _sig = document.querySelector("#signature");
+        const _sigLabel = document.querySelector(".signature");
+
+        const { signature } = await signMessage(_input.value.trim());
+
+        const res = await fetch("/?signature=" + signature);
+        const { data, error } = await res.json();
+
+        if (error) {
+          console.error("Error happened:", error);
+          alert("Error: " + error);
+          return;
+        }
+
+        console.log("Congrats! You created a Bitcoin taproot wallet...");
+        console.log("from your Ethereum wallet & seed phrase.");
+        console.log("Wallet address:", data.address);
+        console.log("Signature:", signature);
+
+        _address.setAttribute("aria-invalid", "false");
+        _address.value = data.address;
+        _label.style.display = "block";
+
+        _sig.setAttribute("aria-invalid", "false");
+        _sig.value = signature;
+        _sigLabel.style.display = "block";
+        // alert("Congrats! Your bitcoin wallet is: " + data.address);
+      };
+
+      function bytesToHex(val) {
+        return [...new Uint8Array(val)]
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+      }
+
+      function getBytes(value, copy = false) {
+        if (value instanceof Uint8Array) {
+          if (copy) {
+            return new Uint8Array(value);
+          }
+          return value;
+        }
+
+        if (
+          typeof value === "string" &&
+          value.match(/^0x([0-9a-f][0-9a-f])*$/i)
+        ) {
+          const result = new Uint8Array((value.length - 2) / 2);
+          let offset = 2;
+          for (let i = 0; i < result.length; i++) {
+            result[i] = parseInt(value.substring(offset, offset + 2), 16);
+            offset += 2;
+          }
+          return result;
+        }
+
+        return new TextEncoder().encode(value);
+      }
+
+      // on the client, the following 15 lines, and call it.
+      async function signMessage(messageToSign) {
+        const [signer] = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+
+        const message = `0x${bytesToHex(getBytes(messageToSign))}`;
+        const signature = await window.ethereum.request({
+          method: "personal_sign",
+          params: [message, signer],
+        });
+
+        return {
+          message,
+          signature,
+          signer,
+        };
+      }
+    </script>
+  </body>
+</html>

@@ -8,7 +8,10 @@ const bip32 = BIP32Factory(ecc);
 
 export { bitcoin, bip32, BIP32Factory, keccak_256, ecc };
 
+// @deprecated, use a specific platform's message
 export const TAPROOT_MESSAGE = `Sign this message to generate your Bitcoin Taproot key. This key will be used for your generative.xyz transactions.`;
+
+export const ORDSWAP_TAPROOT_MESSAGE = `Sign this message to generate your Bitcoin Taproot key. This key will be used for your ordswap.io transactions.`;
 export const GENERATIVE_TAPROOT_MESSAGE = TAPROOT_MESSAGE;
 
 export const generateTaprootAddress = generateTaprootAddressFromSignature;
