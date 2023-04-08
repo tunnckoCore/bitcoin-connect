@@ -15,8 +15,6 @@ Tweets about it:
 - [API Usage](#api-usage)
 - [Use as a user](#ui-usage)
 
-![image](https://user-images.githubusercontent.com/5038030/230706652-cbc02d1a-a7f2-4c76-ac0b-cde27650ac74.png)
-
 ### As a library
 
 Check the `test.js` for an example.
