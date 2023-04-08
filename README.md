@@ -65,9 +65,32 @@ console.log(taprootAddress);
 
 ### API Usage
 
-TODO
+The API generates you a bitcoin taproot address, given an Ethereum/Web3 signature.
 
-_(check the source code in `api/index.ts`)_
+It accepts both POST and GET requests to the root domain, e.g. `/`.
+
+Try this https://bitcoin-connect.deno.dev/?signature=0x849cdb2c6ab66269d95e219ab99d12762c6caad49f6b0fa569289935c21179242747640b69be801f8660b17cba85bb37e8897be01830c6442b95fd6bc69038991b
+
+You can also pass the `signature` to a POST request body
+
+```js
+// generate this signature somehow,
+// eg. using `personal_sign` of Metamask, or another (Injected browser) wallet
+const sig = `0x849cdb2c6ab66269d95e219ab99d12762c6caad49f6b0fa569289935c21179242747640b69be801f8660b17cba85bb37e8897be01830c6442b95fd6bc69038991b`;
+
+const res = await fetch("https://bitcoin-connect.deno.dev", {
+  method: "POST",
+  headers: { "content-type": "application/json" },
+  body: JSON.stringify({ signature: sig }),
+});
+
+const { error, data } = await res.json();
+const { address, signature, message } = data;
+
+constole.log({ error, address, signature, message });
+```
+
+_(for more check the source code in `api/index.ts`)_
 
 For development
 
