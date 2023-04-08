@@ -9,6 +9,16 @@ Tweets about it:
 - https://twitter.com/wgw_eth/status/1644576875845496833
 - https://twitter.com/wgw_eth/status/1644557972889018369
 
+## Install
+
+```
+npm install bitcoin-connect
+```
+
+For Deno, use the `npm` protocol, eg. `npm:bitcoin-connect`.
+
+**It's recommended though**, to use the `https://esm.sh/bitcoin-connect` because some of the bitcoin libraries that are used my not be resolved properly. I'll definitely make smaller ESM-only alternatives in the future.
+
 ## Table of Contents
 
 - [As Library](#as-a-library)
