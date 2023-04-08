@@ -9,6 +9,12 @@ const bip32 = BIP32Factory(ecc);
 export { bitcoin, bip32, BIP32Factory, keccak_256, ecc };
 
 export const TAPROOT_MESSAGE = `Sign this message to generate your Bitcoin Taproot key. This key will be used for your generative.xyz transactions.`;
+export const GENERATIVE_TAPROOT_MESSAGE = TAPROOT_MESSAGE;
+
+export const generateTaprootAddress = generateTaprootAddressFromSignature;
+export const generateTaproot = generateTaprootAddressFromSignature;
+export const generateFrom = generateTaprootAddressFromSignature;
+export const generate = generateTaprootAddressFromSignature;
 
 export function generateTaprootAddressFromSignature(signature) {
   // returns Uint8Array
