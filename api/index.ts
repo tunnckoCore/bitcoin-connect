@@ -61,7 +61,7 @@ serve(async (req) => {
     generateTaprootAddressFromSignature(sig, msg);
 
   msg = msg || TAPROOT_MESSAGE;
-  const data = { address, signature, message: msg, publicKey: taprootChild.publicKey.toString('utf8') };
+  const data = { address, signature, message: msg, publicKey: taprootChild.publicKey.toString('hex') };
 
   return Response.json(
     { data },
