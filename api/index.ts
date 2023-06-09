@@ -57,11 +57,11 @@ serve(async (req) => {
     );
   }
 
-  const { taprootAddress: address, signature } =
+  const { taprootAddress: address, signature, taprootChild } =
     generateTaprootAddressFromSignature(sig, msg);
 
   msg = msg || TAPROOT_MESSAGE;
-  const data = { address, signature, message: msg };
+  const data = { address, signature, message: msg, publicKey: taprootChild.publicKey };
 
   return Response.json(
     { data },
